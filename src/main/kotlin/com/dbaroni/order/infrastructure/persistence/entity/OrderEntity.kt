@@ -1,19 +1,23 @@
 package com.dbaroni.order.infrastructure.persistence.entity
 
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Id
 import java.time.OffsetDateTime
 import java.util.UUID
-import javax.management.Descriptor
 
+@Entity
 data class OrderEntity(
-    val id: UUID?,
+    @Id
+    val id: UUID = UUID.randomUUID(),
     val amount: Int,
-    val descriptor: Descriptor,
-    val dueDate: OffsetDateTime,
+    val description: String,
     val createdAt: OffsetDateTime,
     @Enumerated(EnumType.STRING)
-    val status: PaymentStatus
+    val status: OrderStatus
 )
 
-enum class PaymentStatus {
-    PENDING, COMPLETED, FAILED
+enum class OrderStatus {
+    PENDING, COMPLETED
 }
