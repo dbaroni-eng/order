@@ -1,8 +1,10 @@
 package com.dbaroni.order.domain.model
 
-import javax.management.Descriptor
+import java.util.UUID
 
 data class Order(
+    val id: UUID?,
     val amount: Int,
-    val descriptor: Descriptor
+    val description: String,
+    val status: OrderStatus
 )

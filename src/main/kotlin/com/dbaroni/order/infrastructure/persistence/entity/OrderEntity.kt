@@ -1,8 +1,6 @@
 package com.dbaroni.order.infrastructure.persistence.entity
 
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -14,10 +12,6 @@ data class OrderEntity(
     val amount: Int,
     val description: String,
     val createdAt: OffsetDateTime,
-    @Enumerated(EnumType.STRING)
-    val status: OrderStatus
+    val status: String
 )
 
-enum class OrderStatus {
-    PENDING, COMPLETED
-}
