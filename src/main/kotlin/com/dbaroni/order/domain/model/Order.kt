@@ -6,5 +6,5 @@ data class Order(
     val id: UUID?,
     val amount: Int,
     val description: String,
-    val status: OrderStatus
+    val status: OrderStatus?
 )

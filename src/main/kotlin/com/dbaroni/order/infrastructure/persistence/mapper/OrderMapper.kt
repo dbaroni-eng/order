@@ -13,7 +13,7 @@ object OrderMapper {
             amount = order.amount,
             description = order.description,
             createdAt = OffsetDateTime.now(),
-            status = order.status.name
+            status = order.status?.name ?: OrderStatus.PENDING.name
         )
 
     fun toModel(entity: OrderEntity): Order =
