@@ -15,33 +15,37 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.UUID
 
-
 @RestController
 @RequestMapping("/v1/orders")
 class OrderController(
     private val createOrderUseCase: CreateOrderUseCase,
     private val findOrderUseCase: FindOrderUseCase
 ) {
-
     @PostMapping
-    fun create(@RequestBody request: CreateOrderRequest): ResponseEntity<OrderResponse> {
-        val order = Order(
-            id = null,
-            amount = request.amount,
-            description = request.description,
-            status = null
-        )
+    fun create(
+        @RequestBody request: CreateOrderRequest
+    ): ResponseEntity<OrderResponse> {
+        val order =
+            Order(
+                id = null,
+                amount = request.amount,
+                description = request.description,
+                status = null,
+            )
         val saved = createOrderUseCase.execute(order)
-        val location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(saved.id)
-            .toUri()
+        val location =
+            ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(saved.id)
+                .toUri()
         return ResponseEntity.created(location).build()
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: UUID): ResponseEntity<OrderResponse> {
+    fun findById(
+        @PathVariable id: UUID
+    ): ResponseEntity<OrderResponse> {
         val order = findOrderUseCase.execute(id)
         return if (order != null) {
             ResponseEntity.ok(OrderResponse.from(order))

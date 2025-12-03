@@ -1,9 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask
+
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.5.7"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 
 group = "com.dbaroni"
@@ -35,6 +38,21 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
+}
+
+ktlint {
+    version.set("1.2.1")
+    verbose.set(true)
+    android.set(false)
+    outputColorName.set("RED")
+}
+
+// tasks.named("build") {
+//    finalizedBy("ktlintFormat") // roda format mesmo se o build falhar
+// }
+
+tasks.withType<KtLintCheckTask>().configureEach {
+    finalizedBy("ktlintFormat") // roda format mesmo se o check falhar
 }
 
 tasks.withType<Test> {

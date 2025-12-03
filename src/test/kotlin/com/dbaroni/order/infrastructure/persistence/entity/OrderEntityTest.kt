@@ -1,5 +1,6 @@
 package com.dbaroni.order.infrastructure.persistence.entity
 
+import com.dbaroni.order.domain.model.OrderStatus
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +15,7 @@ class OrderEntityTest {
 
     @BeforeEach
     fun setUp() {
-        order = OrderEntity(orderId, 10000, "Teste", orderCreationDate, OrderStatus.PENDING)
+        order = OrderEntity(orderId, 10000, "Teste", orderCreationDate, OrderStatus.PENDING.name)
     }
 
     @Test
@@ -39,7 +40,7 @@ class OrderEntityTest {
 
     @Test
     fun `should have the same creation STATUS`() {
-        assertEquals(OrderStatus.PENDING, order.status)
+        assertEquals(OrderStatus.PENDING.name, order.status)
     }
 
     @Test

@@ -1,3 +1,3 @@
 # order
 
-A Kotlin prototype for a payment order
+A Kotlin prototype for order

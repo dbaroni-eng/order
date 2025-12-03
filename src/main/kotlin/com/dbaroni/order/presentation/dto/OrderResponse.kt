@@ -11,11 +11,12 @@ data class OrderResponse(
     val status: String
 ) {
     companion object {
-        fun from(order: Order) = OrderResponse(
-            id = order.id!!,
-            amount = order.amount,
-            description = order.description,
-            status = order.status?.name ?: OrderStatus.PENDING.name
-        )
+        fun from(order: Order) =
+            OrderResponse(
+                id = order.id!!,
+                amount = order.amount,
+                description = order.description,
+                status = order.status?.name ?: OrderStatus.PENDING.name,
+            )
     }
 }

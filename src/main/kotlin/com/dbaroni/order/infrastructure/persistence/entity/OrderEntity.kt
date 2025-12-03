@@ -14,4 +14,3 @@ data class OrderEntity(
     val createdAt: OffsetDateTime,
     val status: String
 )
-
