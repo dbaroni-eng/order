@@ -7,6 +7,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.9.23"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
+    id("jacoco")
 }
 
 group = "com.dbaroni"
@@ -47,14 +48,40 @@ ktlint {
     outputColorName.set("RED")
 }
 
-// tasks.named("build") {
-//    finalizedBy("ktlintFormat") // roda format mesmo se o build falhar
-// }
+jacoco {
+    toolVersion = "0.8.11"
+}
 
 tasks.withType<KtLintCheckTask>().configureEach {
-    finalizedBy("ktlintFormat") // roda format mesmo se o check falhar
+    finalizedBy("ktlintFormat")
+}
+
+tasks.named<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
+    executionData.setFrom(fileTree(layout.buildDirectory).include("jacoco/test.exec"))
+    sourceSets(sourceSets["main"])
+
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.10".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.named("build") {
+    dependsOn("jacocoTestCoverageVerification")
 }
