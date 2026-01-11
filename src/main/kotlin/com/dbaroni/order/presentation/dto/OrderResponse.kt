@@ -2,11 +2,12 @@ package com.dbaroni.order.presentation.dto
 
 import com.dbaroni.order.domain.model.Order
 import com.dbaroni.order.domain.model.OrderStatus
+import com.dbaroni.order.infrastructure.util.Money
 import java.util.UUID
 
 data class OrderResponse(
     val id: UUID,
-    val amount: Int,
+    val amount: Money,
     val description: String,
     val status: String
 ) {

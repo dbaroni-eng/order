@@ -2,7 +2,7 @@ package com.dbaroni.order.presentation.controller
 
 import com.dbaroni.order.application.CreateOrderUseCase
 import com.dbaroni.order.application.FindOrderUseCase
-import com.dbaroni.order.domain.model.Order
+import com.dbaroni.order.infrastructure.persistence.mapper.OrderMapper.toDomain
 import com.dbaroni.order.presentation.dto.CreateOrderRequest
 import com.dbaroni.order.presentation.dto.OrderResponse
 import org.springframework.http.ResponseEntity
@@ -25,14 +25,7 @@ class OrderController(
     fun create(
         @RequestBody request: CreateOrderRequest
     ): ResponseEntity<OrderResponse> {
-        val order =
-            Order(
-                id = null,
-                amount = request.amount,
-                description = request.description,
-                status = null,
-            )
-        val saved = createOrderUseCase.execute(order)
+        val saved = createOrderUseCase.execute(request.toDomain())
         val location =
             ServletUriComponentsBuilder
                 .fromCurrentRequest()

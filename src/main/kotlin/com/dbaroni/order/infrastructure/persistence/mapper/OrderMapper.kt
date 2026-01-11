@@ -3,6 +3,7 @@ package com.dbaroni.order.infrastructure.persistence.mapper
 import com.dbaroni.order.domain.model.Order
 import com.dbaroni.order.domain.model.OrderStatus
 import com.dbaroni.order.infrastructure.persistence.entity.OrderEntity
+import com.dbaroni.order.presentation.dto.CreateOrderRequest
 import java.time.OffsetDateTime
 import java.util.UUID
 
@@ -22,5 +23,13 @@ object OrderMapper {
             amount = entity.amount,
             description = entity.description,
             status = OrderStatus.valueOf(entity.status),
+        )
+
+    fun CreateOrderRequest.toDomain(): Order =
+        Order(
+            id = null,
+            amount = amount,
+            description = description,
+            status = null,
         )
 }

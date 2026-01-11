@@ -4,6 +4,6 @@ import com.dbaroni.order.domain.model.Order
 
 class OrderService {
     fun validate(order: Order): Boolean {
-        return order.amount > 0
+        return order.amount.value > 0
     }
 }
